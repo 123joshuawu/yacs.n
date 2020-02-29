@@ -6,3 +6,7 @@ h1 {
   /* border-right: 0.5px solid grey; */
   padding-right: 10px;
 }
+
+.course-list-element {
+  cursor: pointer;
+}

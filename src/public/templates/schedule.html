@@ -3,6 +3,8 @@
 <head>
   <title>YACS</title>
 
+  <script src="/js/schedule.js" charset="utf-8"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
   <script src="/js/scheduling.js" charset="utf-8"></script>
   <link rel="stylesheet" href="/css/scheduling.css">
@@ -59,8 +61,12 @@
             <hr>
 
             <div class="course-list">
-              <div class="course-list-element" ng-repeat='class in classList | filter:textSearch'>
-                <b>{{ class.name }} (4 Credits)</b>
+              <div 
+                class="course-list-element" 
+                ng-repeat='class in classList | filter:textSearch' 
+                ng-click="sched.addCourse(class)"
+              >
+                <b>(4 Credits)</b>
                 <p> {{ class.title }} <i>by Professor Kuzmin</i></p>
               </div>
               <!-- <div class="course-list-element">
@@ -80,14 +86,34 @@
           <h2 class="text-center">Schedule</h2>
           <hr>
 
-          <div class="schedule"></div>
+          <!-- <div class="schedule"></div>
             <div class="div" ng-repeat='day in _schedule_template.days'>
               {{day}}
               <span class="div" ng-repeat='hour in _schedule_template.hours'>
                 {{day}}{{hour}}
               </span>
               <br>
+            </div> -->
+
+          <div class="row" ng-repeat="daySessions in sched.dailySessions">
+            <div class="col-auto">{{_schedule_template.days[$index]}}</div>
+            <div class="col-auto" ng-repeat="sess in daySessions">
+              <p>{{sess.crn}}</p>
+              <p>{{sess.time_start}}</p>
+              <p>{{sess.time_end}}</p>
             </div>
+          </div>
+          <div class="row">
+            <div class="col-auto">Courses in schedule:</div>
+            <div 
+              class="col-auto" 
+              ng-repeat="course in sched.courses"
+              ng-click="sched.removeCourse(course)"
+              style="cursor: pointer;"
+            >
+              {{course.title}}
+            </div>
+          </div>
 
         </div>
 
