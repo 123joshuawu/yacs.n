@@ -82,7 +82,7 @@ class Schedule {
     } else if (newCourseSession.day_of_week === undefined
       || newCourseSession.time_end === undefined
       || newCourseSession.time_start === undefined) {
-      console.error(`Cannot add courseSession with undefined values`);
+      console.error(`Cannot add courseSession with undefined values ${JSON.stringify(newCourseSession)}`);
     } else {
       const daySessions = this.dailySessions[newCourseSession.day_of_week];
       const numSessions = daySessions.length;
@@ -113,7 +113,7 @@ class Schedule {
         
         // Otherwise there is a schedule conflict
         } else {
-          console.error(`Failed to add ${newCourseSession}, schedule conflict with ${sess}`);
+          console.error(`Schedule conflict between ${JSON.stringify(newCourseSession)} and ${JSON.stringify(sess)}`);
           return null;
         }
       }
@@ -141,7 +141,7 @@ class Schedule {
         }
       }
 
-      console.error(`Failed to remove could not find ${courseSession}`);
+      console.error(`Failed to remove could not find ${JSON.stringify(courseSession)}`);
       return false;
     }
   }
@@ -155,7 +155,7 @@ class Schedule {
     if (!courseSection) {
       console.warn(`Ignoring add null/undefined courseSection`);
     } else if (courseSection.sessions.length === 0) {
-      console.error(`Cannot add courseSection with no sessions ${courseSection}`);
+      console.error(`Cannot add courseSection with no sessions ${JSON.stringify(courseSection)}`);
     } else {
       /**
        * @type {{index: number, day: number, courseSession: CourseSession}[]}
@@ -165,15 +165,15 @@ class Schedule {
 
       // Check that there are no session conflicts in course section sessions
       for (const courseSession of courseSection.sessions) {
-        let index = this._getAddCourseSessionIndex(courseSession);
+        let sessionIndex = this._getAddCourseSessionIndex(courseSession);
 
-        if (index === null) {
+        if (sessionIndex === null) {
           console.error(`Failed to add course section`);
           return false;
 
         } else {
           additions.push({
-            index,
+            index: sessionIndex,
             day: courseSession.day_of_week,
             courseSession
           });
@@ -186,10 +186,10 @@ class Schedule {
       // or insert in correct order
       for (const { index, day, courseSession } of additions) {
         this.dailySessions[day].splice(index, 0, courseSession);
-        console.log(`Inserted on day ${day} at index ${index} new courseSession ${courseSession}`)
+        console.log(`Inserted on day ${day} at index ${index} new courseSession ${JSON.stringify(courseSession)}`)
       }
 
-      console.log(`Added new courseSection ${courseSection}`);
+      console.log(`Added new courseSection ${JSON.stringify(courseSection)}`);
       return true;
     }
   }
@@ -203,7 +203,7 @@ class Schedule {
     if (!courseSection) {
       console.warn(`Ignoring remove null/undefined courseSection`);
     } else if (courseSection.sessions.length === 0) {
-      console.error(`Cannot remove courseSection with no sessions ${courseSection}`);
+      console.error(`Cannot remove courseSection with no sessions ${JSON.stringify(courseSection)}`);
     } else {
       for (const courseSession of courseSection.sessions) {
         this._removeCourseSession(courseSession);
@@ -217,10 +217,11 @@ class Schedule {
    * @returns {boolean} if course was added
    */
   addCourse (course) {
+    console.log(`Adding new course ${JSON.stringify(course)}`)
     if (!course) {
       console.warn(`Ignoring add null/undefined course`);
     } else if (course.sections.length === 0) {
-      console.error(`Cannot add course with no sections ${course}`);
+      console.error(`Cannot add course with no sections ${JSON.stringify(course)}`);
     } else {
       if (this.addCourseSection(course.sections[0])) {
         this.courses.push(course);
@@ -238,7 +239,7 @@ class Schedule {
     if (!course) {
       console.warn(`Ignoring remove null/undefined course`);
     } else if (course.sections.length === 0) {
-      console.error(`Cannot remove course with no sections ${course}`);
+      console.error(`Cannot remove course with no sections ${JSON.stringify(course)}`);
     } else {
       this.removeCourseSection(course.sections[0]);
       this.courses.splice(this.courses.indexOf(course), 1);
