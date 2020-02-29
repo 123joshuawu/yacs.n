@@ -6,6 +6,8 @@ values
   (15343, 01, 'SUMMER 2020', '2020-05-26', '2020-10-21', 'ARCH', '2510', 'MATERIALS AND DESIGN'),
   (15344, 02, 'SUMMER 2020', '2020-05-26', '2020-10-21', 'ARCH', '2510', 'MATERIALS AND DESIGN'),
   (15329, 01, 'SUMMER 2020', '2020-05-26', '2020-10-21', 'COGS', '4360', 'BEHAVIOURAL NEUROSCIENCE'),
+
+  (19999, 01, 'SUMMER 2020', '2020-05-26', '2020-10-21', 'CONF', '9000', 'CONFLICT 1'),
   -- first half semester courses
   (12312, 01, 'SUMMER 2020', '2020-05-26', '2020-07-10', 'ARCH', '2520', 'DIGITAL CONSTRUCTS 1'),
   (15340, 01, 'SUMMER 2020', '2020-05-26', '2020-07-10', 'BIOL', '4200', 'BIOSTATISTICS'),
@@ -25,7 +27,11 @@ values
 
     -- biostatistics
     (15340, 01, 'SUMMER 2020', '12:00PM', '1:50PM', '3'),
-    (15340, 01, 'SUMMER 2020', '12:00PM', '1:50PM', '0');
+    (15340, 01, 'SUMMER 2020', '12:00PM', '1:50PM', '0'),
+
+    -- schedule conflict
+    (19999, 01, 'SUMMER 2020', '12:00PM', '1:50PM', '0'),
+    (19999, 01, 'SUMMER 2020', '12:00PM', '1:50PM', '1')
 
     -- -- first half semester courses
     -- (12312, 01, 'SUMMER 2020', '10:00AM', '11:50AM', '0'),
