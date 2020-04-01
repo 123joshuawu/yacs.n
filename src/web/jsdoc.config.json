@@ -4,7 +4,7 @@
     "include": ["src"],
     "exclude": ["node_modules", "dist", "docs"]
   },
-  "plugins": ["plugins/markdown"],
+  "plugins": ["plugins/markdown", "testplugin"],
   "opts": {
     "destination": "./docs/",
     "recurse": true
